@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Todo App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #welcome-container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #login-signup-options {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #77dd77;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5cb85c;
+        }
+
+        #login-btn {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-container">
+        <h1>Welcome to Tasklist</h1>
+        <div id="login-signup-options">
+            <button id="login-btn" onclick="redirectTo('login.html')">Login</button>
+            <button onclick="redirectTo('signup.html')">Sign Up</button>
+        </div>
+    </div>
+
+    <script>
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

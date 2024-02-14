@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: backend
+  labels:
+    app: backend
+spec:
+  type: LoadBalancer
+  selector:
+    app: backend
+  ports:
+  - port: 5000
+    targetPort: backend-port
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: backend-statefulset
+  namespace: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  serviceName: backend-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        node-group: backend-ng
+      containers:
+      - name: backend
+        image: Your authentication image URI
+        resources:
+          limits:
+            memory: "0.6Gi"
+            cpu: "600m"
+        ports:
+        - containerPort: 5000
+          name: backend-port
+        volumeMounts:
+        - name: backend-volume
+          mountPath: /app/CSVs
+
+        - name: config-vol
+          mountPath: /app/config
+
+        - name: secret-vol
+          mountPath: /app/secret
+      volumes:
+        - name: backend-volume
+          persistentVolumeClaim:
+            claimName: backend-pvc-claim
+
+        - name: config-vol
+          configMap:
+            name: backend-config
+
+        - name: secret-vol
+          secret:
+            secretName: backend-secret

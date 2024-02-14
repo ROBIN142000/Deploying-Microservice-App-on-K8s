@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+data:
+  config.env: |
+    DB_HOST= "Your RDS Database Endpoint"
+    APP_HOST=0.0.0.0

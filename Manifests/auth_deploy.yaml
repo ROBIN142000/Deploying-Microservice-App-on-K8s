@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth
+  ports:
+  - port: 8000
+    targetPort: auth-port
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      nodeSelector:
+        node-group: auth-ng
+      containers:
+      - name: auth
+        image: Your authentication image URI
+        resources:
+          limits:
+            memory: "0.6Gi"
+            cpu: "600m"
+        ports:
+        - name: auth-port
+          containerPort: 8000
+        volumeMounts:
+        - name: config-vol
+          mountPath: /app/config
+
+        - name: secret-vol
+          mountPath: /app/secret
+      volumes:
+      - name: config-vol
+        configMap:
+          name: auth-config
+
+      - name: secret-vol
+        secret:
+          secretName: auth-secret

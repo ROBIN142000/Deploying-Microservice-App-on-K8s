@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-web-cd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "GitHub fined grained token to access this repository"
+    targetRevision: main
+    path: .
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

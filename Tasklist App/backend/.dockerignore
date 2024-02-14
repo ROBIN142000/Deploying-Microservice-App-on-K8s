@@ -1,0 +1,5 @@
+Dockerfile
+querry.txt
+README.md
+__pycache__
+docker-compose.yaml
